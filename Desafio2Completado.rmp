@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="11.1.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.4.000" expanded="true" name="Process" origin="GENERATED_TUTORIAL">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_excel" compatibility="11.1.001" expanded="true" height="68" name="Whisky" width="90" x="45" y="34">
+        <parameter key="excel_file" value="C:\Users\Luis Mart\Downloads\whisky.xlsx"/>
+        <parameter key="sheet_selection" value="sheet number"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="use_header_row" value="true"/>
+        <parameter key="header_row" value="1"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="America/Guatemala"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="id_Whisky.true.integer.attribute"/>
+          <parameter key="1" value="Precio.true.integer.attribute"/>
+          <parameter key="2" value="Malta.true.integer.attribute"/>
+          <parameter key="3" value="Categoria.true.polynominal.attribute"/>
+          <parameter key="4" value="Añejamiento.true.real.attribute"/>
+          <parameter key="5" value="Calidad.true.integer.attribute"/>
+          <parameter key="6" value="G.true.polynominal.attribute"/>
+          <parameter key="7" value="H.true.polynominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="11.1.001" expanded="true" height="103" name="Filter Precio" width="90" x="179" y="34">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="Precio.gt.70"/>
+        </list>
+        <parameter key="filters_logic_and" value="true"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="model_simulator:data_statistics" compatibility="11.1.001" expanded="true" height="82" name="Statistics" width="90" x="313" y="34"/>
+      <operator activated="true" class="read_excel" compatibility="11.1.001" expanded="true" height="68" name="Primer Compra" width="90" x="45" y="136">
+        <parameter key="excel_file" value="C:\Users\Luis Mart\Downloads\recursosdesafio2\primer_compra.xlsx"/>
+        <parameter key="sheet_selection" value="sheet number"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="use_header_row" value="true"/>
+        <parameter key="header_row" value="1"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="America/Guatemala"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="Primer_Compra.true.polynominal.attribute"/>
+          <parameter key="1" value="Estado Civil.true.integer.attribute"/>
+          <parameter key="2" value="Edad.true.integer.attribute"/>
+          <parameter key="3" value="Sueldo.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="blending:set_role" compatibility="11.1.001" expanded="true" height="82" name="Primer Compra Llb" width="90" x="179" y="136">
+        <list key="set_roles">
+          <parameter key="Primer_Compra" value="label"/>
+        </list>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="11.1.001" expanded="true" height="103" name="Filter Edad" width="90" x="313" y="136">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="Edad.gt.21"/>
+        </list>
+        <parameter key="filters_logic_and" value="true"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="11.1.001" expanded="true" height="103" name="Decision Tree -PC" width="90" x="447" y="136">
+        <parameter key="criterion" value="information_gain"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.25"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="11.1.001" expanded="true" height="68" name="Método de pago" width="90" x="45" y="442">
+        <parameter key="repository_entry" value="//Samples/data/Deals"/>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="11.1.001" expanded="true" height="103" name="Filtro Por Pago" width="90" x="179" y="442">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="Payment Method.equals.cheque"/>
+          <parameter key="filters_entry_key" value="Payment Method.equals.cash"/>
+        </list>
+        <parameter key="filters_logic_and" value="false"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="11.1.001" expanded="true" height="103" name="Decision Tree" width="90" x="313" y="442">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="read_excel" compatibility="11.1.001" expanded="true" height="68" name="Estado Civil" width="90" x="45" y="238">
+        <parameter key="excel_file" value="C:\Users\Luis Mart\Downloads\recursosdesafio2\estado_civil.xlsx"/>
+        <parameter key="sheet_selection" value="sheet number"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="use_header_row" value="true"/>
+        <parameter key="header_row" value="1"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="America/Guatemala"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="dinero.true.integer.attribute"/>
+          <parameter key="1" value="casa.true.integer.attribute"/>
+          <parameter key="2" value="estado.true.polynominal.attribute"/>
+          <parameter key="3" value="sexo.true.integer.attribute"/>
+          <parameter key="4" value="auto.true.integer.attribute"/>
+          <parameter key="5" value="edad.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+      </operator>
+      <operator activated="true" class="blending:set_role" compatibility="11.1.001" expanded="true" height="82" name="Estado Lbl" width="90" x="179" y="238">
+        <list key="set_roles">
+          <parameter key="estado" value="label"/>
+        </list>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="11.1.001" expanded="true" height="103" name="Decision Tree (2)" width="90" x="313" y="238">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="11.1.001" expanded="true" height="68" name="Cliente Potencial" width="90" x="45" y="340">
+        <parameter key="repository_entry" value="//Samples/data/Deals"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="11.1.001" expanded="true" height="103" name="Arbol - Cliente Potencial" width="90" x="179" y="340">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="11.1.001" expanded="true" height="68" name="Edad" width="90" x="45" y="544">
+        <parameter key="repository_entry" value="//Samples/data/Deals"/>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="11.1.001" expanded="true" height="103" name="Edad &gt; 50" width="90" x="179" y="544">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="Age.gt.50"/>
+        </list>
+        <parameter key="filters_logic_and" value="false"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="11.1.001" expanded="true" height="103" name="Decision Tree (3)" width="90" x="313" y="544">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <connect from_op="Whisky" from_port="output" to_op="Filter Precio" to_port="example set input"/>
+      <connect from_op="Filter Precio" from_port="example set output" to_op="Statistics" to_port="example set"/>
+      <connect from_op="Statistics" from_port="statistics" to_port="result 1"/>
+      <connect from_op="Primer Compra" from_port="output" to_op="Primer Compra Llb" to_port="example set input"/>
+      <connect from_op="Primer Compra Llb" from_port="example set output" to_op="Filter Edad" to_port="example set input"/>
+      <connect from_op="Filter Edad" from_port="example set output" to_op="Decision Tree -PC" to_port="training set"/>
+      <connect from_op="Decision Tree -PC" from_port="model" to_port="result 2"/>
+      <connect from_op="Método de pago" from_port="output" to_op="Filtro Por Pago" to_port="example set input"/>
+      <connect from_op="Filtro Por Pago" from_port="example set output" to_op="Decision Tree" to_port="training set"/>
+      <connect from_op="Decision Tree" from_port="model" to_port="result 4"/>
+      <connect from_op="Estado Civil" from_port="output" to_op="Estado Lbl" to_port="example set input"/>
+      <connect from_op="Estado Lbl" from_port="example set output" to_op="Decision Tree (2)" to_port="training set"/>
+      <connect from_op="Decision Tree (2)" from_port="model" to_port="result 3"/>
+      <connect from_op="Cliente Potencial" from_port="output" to_op="Arbol - Cliente Potencial" to_port="training set"/>
+      <connect from_op="Arbol - Cliente Potencial" from_port="model" to_port="result 5"/>
+      <connect from_op="Edad" from_port="output" to_op="Edad &gt; 50" to_port="example set input"/>
+      <connect from_op="Edad &gt; 50" from_port="example set output" to_op="Decision Tree (3)" to_port="training set"/>
+      <connect from_op="Decision Tree (3)" from_port="model" to_port="result 6"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
+      <portSpacing port="sink_result 6" spacing="0"/>
+      <portSpacing port="sink_result 7" spacing="0"/>
+      <background height="232" location="//Samples/Tutorials/Basics/01/tutorial1" width="1502" x="26" y="47"/>
+    </process>
+  </operator>
+</process>
